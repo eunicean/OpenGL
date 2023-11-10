@@ -15,6 +15,8 @@ class Renderer(object):
         glPolygonMode(GL_FRONT, GL_FILL)
         glViewport(0,0,self.width,self.height)
 
+        self.elapsedTime = 0.0
+
         self.scene = []
 
         self.activeShader = None
@@ -126,15 +128,13 @@ class Renderer(object):
                 for i in vn3:
                     [objectData.append(i)]
         
-        newModel = Model(objectData)
-        newModel.loadTexture(texture)
-        newModel.position = glm.vec3(position)
-        newModel.rotation = glm.vec3(rotation)
-        newModel.scale = glm.vec3(scale)
-
-        self.scene.append(newModel)
+        result = Model(objectData)
+        result.loadTexture(texture)
+        result.position = glm.vec3(position)
+        result.rotation = glm.vec3(rotation)
+        result.scale = glm.vec3(scale)
         
-        return newModel
+        return result
         
     def render(self):
         glClearColor(self.clearColor[0],self.clearColor[1],self.clearColor[2],1)
@@ -148,6 +148,8 @@ class Renderer(object):
             
             glUniformMatrix4fv(glGetUniformLocation(self.activeShader, "projectionMatrix"),
                                1, GL_FALSE, glm.value_ptr(self.projectionMatrix))
+            
+            glUniform1f(glGetUniformLocation(self.activeShader, "time"), self.elapsedTime)
             
             glUniform3fv(glGetUniformLocation(self.activeShader, "dirLight"), 1, glm.value_ptr(self.dirLight))
             

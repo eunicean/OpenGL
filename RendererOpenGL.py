@@ -16,7 +16,7 @@ clock = pygame.time.Clock()
 rend = Renderer(screen)
 
 
-rend.setShader(vertex_shader, fragment_shader)
+rend.setShader(vertex_shader, noise_fragment_shader)
 
 
 # #           POSITION        #COLOR
@@ -41,6 +41,7 @@ rend.setShader(vertex_shader, fragment_shader)
 # rend.scene.append(triangleModel)
 
 penguin = rend.loadModel(filename="PenguinBaseMesh.obj",texture="PenguinDiffuseColor.bmp")
+rend.scene.append(penguin)
 
 isRunning = True
 while isRunning:
@@ -55,20 +56,35 @@ while isRunning:
                 isRunning = False
 
 
-    vel = 60
+    vel = 9
     if keys[K_d]:
-        penguin.rotation.x += vel * deltaTime
+        rend.camPosition.x += vel * deltaTime
     if keys[K_a]:
-        penguin.rotation.x -= vel * deltaTime
+        rend.camPosition.x -= vel * deltaTime
     if keys[K_w]:
-        penguin.rotation.z += vel * deltaTime
+        rend.camPosition.z += vel * deltaTime
     if keys[K_s]:
-        penguin.rotation.z -= vel * deltaTime
+        rend.camPosition.z -= vel * deltaTime
     if keys[K_q]:
-        penguin.rotation.y += vel * deltaTime
+         rend.camPosition.y += vel * deltaTime
     if keys[K_e]:
-        penguin.rotation.y -= vel * deltaTime
+         rend.camPosition.y -= vel * deltaTime
+    if keys[K_z]:
+        penguin.rotation.y += 70 * deltaTime
+    if keys[K_x]:
+        penguin.rotation.y -= 70 * deltaTime
+    if keys[K_1]:
+        rend.setShader(vertex_shader, fragment_shader)
+    if keys[K_2]:
+        rend.setShader(vertex_shader, noise_fragment_shader)
+    if keys[K_3]:
+        rend.setShader(ballon_vertex_shader, ballon_fragment_shader)
+    if keys[K_4]:
+        rend.setShader(vertex_shader, color_fragment_shader)
 
+    # penguin.rotation.y += 45 * deltaTime
+
+    rend.elapsedTime += deltaTime       
 
     rend.render()
     pygame.display.flip()
