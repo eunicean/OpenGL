@@ -134,8 +134,8 @@ void main() {
 
 color_fragment_shader = """
 #version 450 core
-precision highp float;
-varying vec3 fNormal;
+
+in vec3 outNormals;
 
 uniform float time;
 
@@ -144,31 +144,18 @@ out vec4 fragColor;
 void main(){
   float theta = time*10.0;
   
-  vec3 dir1 = vec3(cos(theta),0,sin(theta)); 
-  vec3 dir2 = vec3(sin(theta),0,cos(theta));
+  vec3 direction1 = vec3(cos(theta),0,sin(theta)); 
+  vec3 direction2 = vec3(sin(theta),0,cos(theta));
+  vec3 direction3 = vec3(cos(theta),sin(theta),cos(theta));
   
-  float diffuse1 = pow(dot(fNormal,dir1),2.0);
-  float diffuse2 = pow(dot(fNormal,dir2),2.0);
+  float diffuserColor1 = pow(dot(outNormals,direction1),2.0);
+  float diffuserColor2 = pow(dot(outNormals,direction2),2.0);
+  float diffuserColor3 = pow(dot(outNormals,direction3),2.0);
   
-  vec3 col1 = diffuse1 * vec3(1,0.5,0);
-  vec3 col2 = diffuse2 * vec3(0,0,1);
+  vec3 first_color = diffuserColor1 * vec3(1,0.5,0);
+  vec3 second_color = diffuserColor2 * vec3(0,0,1);
+  vec3 third_color = diffuserColor3 * vec3(0.4,0,1);
   
-  fragColor = vec4(col1 + col2, 1.0);
+  fragColor = vec4(first_color + second_color + third_color, 1.0);
 }
-"""
-
-color_vertex_shader = """
-precision highp float;
-attribute vec3 position;
-attribute vec3 normal;
-uniform mat3 normalMatrix;
-uniform mat4 modelViewMatrix;
-uniform mat4 projectionMatrix;
-varying vec3 fNormal;
-
-void main()
-{
-  fNormal = normalize(normalMatrix * normal);
-  vec4 pos = modelViewMatrix * vec4(position, 1.0);
-  gl_Position = projectionMatrix * pos;
 """

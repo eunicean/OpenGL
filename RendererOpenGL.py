@@ -80,7 +80,7 @@ while isRunning:
     if keys[K_3]:
         rend.setShader(ballon_vertex_shader, ballon_fragment_shader)
     if keys[K_4]:
-        rend.setShader(color_vertex_shader, color_fragment_shader)
+        rend.setShader(vertex_shader, color_fragment_shader)
 
     penguin.rotation.y += 45 * deltaTime
 
