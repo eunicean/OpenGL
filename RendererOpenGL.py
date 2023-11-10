@@ -55,7 +55,7 @@ while isRunning:
                 isRunning = False
 
 
-    vel = 5
+    vel = 60
     if keys[K_d]:
         penguin.rotation.x += vel * deltaTime
     if keys[K_a]:

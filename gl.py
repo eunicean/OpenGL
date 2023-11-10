@@ -82,30 +82,49 @@ class Renderer(object):
             if vertCount == 4:
                 vn3 = model.normals[face[3][2] - 1]
                 
-            [objectData.append(i) for i in v0]
-            [objectData.append(vt0[i]) for i in range (2)]
-            [objectData.append(i) for i in vn0]
             
-            [objectData.append(i) for i in v1]
-            [objectData.append(vt1[i]) for i in range (2)]
-            [objectData.append(i) for i in vn1]
+            for i in v0:
+                [objectData.append(i)]
+            for i in range(2):
+                [objectData.append(vt0[i])]
+            for i in vn0:
+                [objectData.append(i)]
 
-            [objectData.append(i) for i in v2]
-            [objectData.append(vt2[i]) for i in range (2)]
-            [objectData.append(i) for i in vn2]
+            for i in v1:
+                [objectData.append(i)]
+            for i in range(2):
+                [objectData.append(vt1[i])]
+            for i in vn1:
+                [objectData.append(i)]
+
+            for i in v2:
+                [objectData.append(i)]
+            for i in range(2):
+                [objectData.append(vt2[i])]
+            for i in vn2:
+                [objectData.append(i)]
             
             if vertCount == 4:
-                [objectData.append(i) for i in v0]
-                [objectData.append(vt0[i]) for i in range (2)]
-                [objectData.append(i) for i in vn0]
+                for i in v0:
+                    [objectData.append(i)]
+                for i in range(2):
+                    [objectData.append(vt0[i])]
+                for i in vn0:
+                    [objectData.append(i)]
             
-                [objectData.append(i) for i in v2]
-                [objectData.append(vt2[i]) for i in range (2)]
-                [objectData.append(i) for i in vn2]
+                for i in v2:
+                    [objectData.append(i)]
+                for i in range(2):
+                    [objectData.append(vt2[i])]
+                for i in vn2:
+                    [objectData.append(i)]
 
-                [objectData.append(i) for i in v3]
-                [objectData.append(vt3[i]) for i in range (2)]
-                [objectData.append(i) for i in vn3]
+                for i in v3:
+                    [objectData.append(i)]
+                for i in range(2):
+                    [objectData.append(vt3[i])]
+                for i in vn3:
+                    [objectData.append(i)]
         
         newModel = Model(objectData)
         newModel.loadTexture(texture)
