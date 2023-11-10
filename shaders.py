@@ -134,13 +134,15 @@ void main() {
 
 color_fragment_shader = """
 #version 450 core
-
+precision highp float;
 varying vec3 fNormal;
 
 uniform float time;
 
+out vec4 fragColor;
+
 void main(){
-  float theta = time;
+  float theta = time*10.0;
   
   vec3 dir1 = vec3(cos(theta),0,sin(theta)); 
   vec3 dir2 = vec3(sin(theta),0,cos(theta));
@@ -151,6 +153,22 @@ void main(){
   vec3 col1 = diffuse1 * vec3(1,0.5,0);
   vec3 col2 = diffuse2 * vec3(0,0,1);
   
-  gl_FragColor = vec4(col1 + col2, 1.0);
+  fragColor = vec4(col1 + col2, 1.0);
 }
+"""
+
+color_vertex_shader = """
+precision highp float;
+attribute vec3 position;
+attribute vec3 normal;
+uniform mat3 normalMatrix;
+uniform mat4 modelViewMatrix;
+uniform mat4 projectionMatrix;
+varying vec3 fNormal;
+
+void main()
+{
+  fNormal = normalize(normalMatrix * normal);
+  vec4 pos = modelViewMatrix * vec4(position, 1.0);
+  gl_Position = projectionMatrix * pos;
 """
