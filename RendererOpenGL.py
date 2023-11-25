@@ -17,15 +17,28 @@ clock = pygame.time.Clock()
 pygame.mixer.music.load("aot.mp3")
 pygame.mixer.music.play(-1)
 
-print("""--- Comandos ---\n
-        Mouse:
-          Scroll up:    Aleja la camara
-          Scroll down:  Acerca la camara
-        Teclado:
-          A:    Mueve camara hacia la izquierda
-          D:    Mueve camara hacia la derecha
-          W:    Mueve camara hacia arriba
-          S:    Mueve camara hacia abajo""")
+print("""--- Comandos ---
+    Mouse:
+        Scroll up:    Aleja la camara
+        Scroll down:  Acerca la camara
+    Teclado:
+        Movimientos
+        A:  Mueve camara hacia la izquierda
+        D:  Mueve camara hacia la derecha
+        W:  Mueve camara hacia arriba
+        S:  Mueve camara hacia abajo
+        X:  Rotar modelo hacia la derecha
+        Z:  Rotar modelo hacia la izquieda
+        Modelos:
+        1:  Pinguino
+        2:  Oso con silla
+        3:  Panito
+        4:  Espada
+        Shaders
+        5:  Normal
+        6:  TV noise
+        7:  Ballon
+        8:  Neon Party""")
 
 rend = Renderer(screen)
 
@@ -94,8 +107,6 @@ while isRunning:
     cam_radius = radius
     cam_height = 2.0
     
-    # rend.camPosition.y = active_model.position.y + cam_radius * glm.sin(angle)
-    # rend.camPosition.z = active_model.position.z + cam_height
     rend.camTarget = active_model.position
     
 
@@ -103,10 +114,6 @@ while isRunning:
 
     
     
-    if keys[K_q]:
-         rend.camPosition.y += vel * deltaTime
-    if keys[K_e]:
-         rend.camPosition.y -= vel * deltaTime
     if keys[K_z]:
         active_model.rotation.y += 70 * deltaTime
     if keys[K_x]:
