@@ -26,6 +26,7 @@ class Renderer(object):
         # View matrix
         self.camPosition = glm.vec3(0,0,0)
         self.camRotation = glm.vec3(0,0,0)
+        self.camTarget = glm.vec3(0, 0, 0)
 
         # Projection matrix
         self.projectionMatrix = glm.perspective(glm.radians(60),
@@ -34,22 +35,24 @@ class Renderer(object):
                                                 1000)
 
     def getViewMatrix(self):
-        identity = glm.mat4(1)
+        # identity = glm.mat4(1)
 
-        translateMat = glm.translate(identity, self.camPosition)
+        # translateMat = glm.translate(identity, self.camPosition)
 
-        # Rotation x - Pitch
-        pitch = glm.rotate(identity, glm.radians(self.camRotation.x), glm.vec3(1,0,0))
-        # Rotation y - Yaw
-        yaw   = glm.rotate(identity, glm.radians(self.camRotation.y), glm.vec3(0,1,0))
-        # Rotation z - Roll
-        roll  = glm.rotate(identity, glm.radians(self.camRotation.z), glm.vec3(0,0,1))
+        # # Rotation x - Pitch
+        # pitch = glm.rotate(identity, glm.radians(self.camRotation.x), glm.vec3(1,0,0))
+        # # Rotation y - Yaw
+        # yaw   = glm.rotate(identity, glm.radians(self.camRotation.y), glm.vec3(0,1,0))
+        # # Rotation z - Roll
+        # roll  = glm.rotate(identity, glm.radians(self.camRotation.z), glm.vec3(0,0,1))
 
-        rotationMat = pitch * yaw * roll
+        # rotationMat = pitch * yaw * roll
 
-        camMatrix = translateMat * rotationMat 
+        # camMatrix = translateMat * rotationMat 
+        viewMatrix = glm.lookAt(self.camPosition, self.camTarget, glm.vec3(0, 1, 0))
 
-        return glm.inverse(camMatrix)
+        # return glm.inverse(camMatrix)
+        return viewMatrix
 
     def setShader(self, vertexShader, fragmentShader):
         if vertexShader is not None and fragmentShader is not None:
@@ -58,7 +61,7 @@ class Renderer(object):
         else:
             self.activeShader = None
 
-    def loadModel(self, filename, texture, position = (0,-0.7,-2), rotation = (0,0,0), scale = (1,1,1)):
+    def loadModel(self, filename, texture, position = (0,-0.7,-5), rotation = (0,0,0), scale = (1,1,1)):
         model = Obj(filename)
         
         objectData = []
