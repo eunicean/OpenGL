@@ -17,7 +17,15 @@ clock = pygame.time.Clock()
 pygame.mixer.music.load("aot.mp3")
 pygame.mixer.music.play(-1)
 
-print("")
+print("""--- Comandos ---\n
+        Mouse:
+          Scroll up:    Aleja la camara
+          Scroll down:  Acerca la camara
+        Teclado:
+          A:    Mueve camara hacia la izquierda
+          D:    Mueve camara hacia la derecha
+          W:    Mueve camara hacia arriba
+          S:    Mueve camara hacia abajo""")
 
 rend = Renderer(screen)
 
@@ -71,25 +79,30 @@ while isRunning:
     
     vel = 9
     if keys[K_d]:
-        angle += 0.5 * deltaTime
-    elif keys[K_a]:
-        angle -= 0.5 * deltaTime
+        angle += 0.8 * deltaTime
+        rend.camPosition.x = active_model.position.x + cam_radius * glm.cos(angle)
+    if keys[K_a]:
+        angle -= 0.8 * deltaTime
+        rend.camPosition.x = active_model.position.x + cam_radius * glm.cos(angle)
+    if keys[K_w]:
+        angle += 0.8 * deltaTime
+        rend.camPosition.y = active_model.position.y + cam_radius * glm.sin(angle)
+    if keys[K_s]:
+        angle -= 0.8 * deltaTime
+        rend.camPosition.y = active_model.position.y + cam_radius * glm.sin(angle)
 
     cam_radius = radius
     cam_height = 2.0
-    rend.camPosition.x = active_model.position.x + cam_radius * glm.cos(angle)
-    rend.camPosition.y = active_model.position.y + cam_radius * glm.sin(angle)
-    rend.camPosition.z = active_model.position.z + cam_height
+    
+    # rend.camPosition.y = active_model.position.y + cam_radius * glm.sin(angle)
+    # rend.camPosition.z = active_model.position.z + cam_height
     rend.camTarget = active_model.position
     
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
     
-    if keys[K_w]:
-        rend.camPosition.z += vel * deltaTime
-    if keys[K_s]:
-        rend.camPosition.z -= vel * deltaTime
+    
     if keys[K_q]:
          rend.camPosition.y += vel * deltaTime
     if keys[K_e]:
